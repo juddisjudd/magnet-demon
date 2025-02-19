@@ -1,0 +1,25 @@
+mode = "production"
+log_level = "info"
+
+[api]
+enabled = true
+bind_address = "0.0.0.0:7070"
+ssl = false
+key_path = ""
+cert_path = ""
+basic_auth = true
+username = "admin"
+password = "password"
+
+[tracker]
+bind_address = "0.0.0.0:6969"
+announce_interval = 120
+min_announce_interval = 120
+max_peer_timeout = 900
+external_ip = ""
+tracker_id = "torrust"
+persistent_torrent_completed = true
+
+[database]
+driver = "postgres"
+uri = "postgres://torrust:password@postgres:5432/torrust"

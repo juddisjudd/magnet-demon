@@ -1,0 +1,22 @@
+environment = "production"
+domain = "localhost:3001"
+protocol = "http"
+data_dir = "/torrents"
+
+[net]
+port = 3000
+address = "0.0.0.0"
+
+[database]
+driver = "postgres"
+uri = "postgres://torrust:password@postgres:5432/torrust"
+
+[tracker]
+url = "http://torrust-tracker:7070"
+api_token = "my-secret-token"
+mode = "public"
+
+[auth]
+secret = "0jfniv1FMITu28EJkwVBhgcUAPsl9dpb"
+token_expiry_days = 7
+enable_registration = true

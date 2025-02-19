@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS torrents (
+  id SERIAL PRIMARY KEY,
+  info_hash VARCHAR(40) NOT NULL UNIQUE,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  size BIGINT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  category VARCHAR(50),
+  seeders INT DEFAULT 0,
+  leechers INT DEFAULT 0,
+  completed INT DEFAULT 0,
+  tmdb_id INT,
+  media_type VARCHAR(10),
+  quality VARCHAR(10),
+  audio_languages JSONB DEFAULT '[]',
+  subtitle_languages JSONB DEFAULT '[]',
+  release_group VARCHAR(50)
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  is_admin BOOLEAN DEFAULT FALSE
+);

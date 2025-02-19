@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: torrust
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: torrust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    restart: always
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    restart: always
+
+  torrust-tracker:
+    image: torrust/tracker:latest
+    ports:
+      - "6969:6969/udp"  
+      - "7070:7070"      
+    volumes:
+      - type: bind
+        source: ./config/tracker
+        target: /etc/torrust/tracker
+        read_only: true
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  torrust-index:
+    image: torrust/index:latest
+    ports:
+      - "3001:3000"      
+    volumes:
+      - type: bind
+        source: ./config/index
+        target: /etc/torrust/index
+        read_only: true
+      - type: bind
+        source: ./torrents
+        target: /torrents
+        read_only: false
+    depends_on:
+      - postgres
+      - torrust-tracker
+    restart: always
+
+volumes:
+  postgres_data:
